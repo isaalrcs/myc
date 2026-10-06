@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎬 Mi Cine V2</title>
+
+<style>
+
+/* =========================
+   CONFIGURACIÓN GENERAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #302536 0%,
+            #141116 35%,
+            #050505 75%
+        );
+
+    overflow-x: hidden;
+}
+
+
+/* =========================
+   CINE
+========================= */
+
+.cine {
+    width: 100%;
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 18px 60px;
+    text-align: center;
+}
+
+
+/* =========================
+   TÍTULO
+========================= */
+
+.titulo {
+    margin-bottom: 25px;
+}
+
+.titulo .icono {
+    font-size: 42px;
+    display: block;
+    filter: drop-shadow(0 0 12px white);
+}
+
+.titulo h1 {
+    margin: 5px 0 0;
+
+    font-size: clamp(30px, 6vw, 55px);
+    letter-spacing: 7px;
+
+    text-shadow:
+        0 0 8px white,
+        0 0 20px #aaa,
+        0 0 35px #555;
+}
+
+.titulo p {
+    margin-top: 8px;
+    color: #aaa;
+    letter-spacing: 4px;
+    font-size: 12px;
+}
+
+
+/* =========================
+   ESCENARIO
+========================= */
+
+.escenario {
+    position: relative;
+    padding: 30px 10px 45px;
+
+    background:
+        radial-gradient(
+            ellipse at center top,
+            rgba(110, 65, 120, 0.35),
+            transparent 65%
+        );
+
+    border-radius: 20px;
+}
+
+
+/* =========================
+   LUCES SUPERIORES
+========================= */
+
+.luces {
+    position: absolute;
+    top: 5px;
+    left: 5%;
+    right: 5%;
+
+    display: flex;
+    justify-content: space-between;
+
+    pointer-events: none;
+}
+
+.luz {
+    width: 9px;
+    height: 9px;
+
+    background: white;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 7px white,
+        0 0 15px white,
+        0 0 25px #aaa;
+
+    animation: brillo 2s infinite alternate;
+}
+
+.luz:nth-child(2) {
+    animation-delay: .3s;
+}
+
+.luz:nth-child(3) {
+    animation-delay: .6s;
+}
+
+.luz:nth-child(4) {
+    animation-delay: .9s;
+}
+
+.luz:nth-child(5) {
+    animation-delay: 1.2s;
+}
+
+.luz:nth-child(6) {
+    animation-delay: 1.5s;
+}
+
+.luz:nth-child(7) {
+    animation-delay: 1.8s;
+}
+
+@keyframes brillo {
+    from {
+        opacity: .45;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* =========================
+   CORTINAS
+========================= */
+
+.cortina {
+    position: absolute;
+
+    top: 25px;
+    bottom: 70px;
+
+    width: 11%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #3d050c 0px,
+            #650914 12px,
+            #260207 25px,
+            #570710 38px
+        );
+
+    box-shadow:
+        inset -8px 0 12px rgba(0,0,0,.6),
+        0 0 25px rgba(0,0,0,.7);
+
+    z-index: 3;
+}
+
+.cortina.izquierda {
+    left: 0;
+
+    border-radius: 0 35px 35px 0;
+
+    transform-origin: left;
+}
+
+.cortina.derecha {
+    right: 0;
+
+    border-radius: 35px 0 0 35px;
+
+    transform-origin: right;
+}
+
+
+/* =========================
+   PANTALLA
+========================= */
+
+.pantalla-marco {
+    position: relative;
+
+    width: 78%;
+    margin: auto;
+
+    padding: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #555,
+            #151515
+        );
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 0 2px #222,
+        0 0 25px rgba(255,255,255,.12),
+        0 20px 60px rgba(0,0,0,.8);
+
+    z-index: 2;
+}
+
+.pantalla {
+    position: relative;
+
+    width: 100%;
+    aspect-ratio: 16 / 9;
+
+    background: #000;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 0 30px black,
+        0 0 25px rgba(255,255,255,.08);
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+
+    border: none;
+
+    display: block;
+}
+
+
+/* =========================
+   LUCES DEL PISO
+========================= */
+
+.luces-piso {
+    width: 78%;
+    margin: 15px auto 0;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.luz-piso {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ddd;
+
+    box-shadow:
+        0 0 7px white,
+        0 0 15px #aaa;
+}
+
+
+/* =========================
+   CONTROLES
+========================= */
+
+.controles {
+    position: relative;
+
+    margin: 30px auto 0;
+
+    width: 90%;
+    max-width: 850px;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35,35,35,.95),
+            rgba(15,15,15,.95)
+        );
+
+    border: 1px solid #333;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.6);
+
+    z-index: 5;
+}
+
+.controles h2 {
+    margin: 0 0 15px;
+
+    font-size: 17px;
+    letter-spacing: 2px;
+
+    color: #ddd;
+}
+
+.entrada {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input {
+    flex: 1;
+
+    min-width: 220px;
+
+    padding: 14px 15px;
+
+    background: #070707;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+input:focus {
+    border-color: #aaa;
+
+    box-shadow:
+        0 0 10px rgba(255,255,255,.12);
+}
+
+button {
+    padding: 13px 17px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eeeeee,
+            #bbbbbb
+        );
+
+    color: #111;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+
+    background: white;
+
+    box-shadow:
+        0 5px 15px rgba(255,255,255,.15);
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+.ayuda {
+    margin-top: 12px;
+
+    color: #777;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   ESCENARIO INFERIOR
+========================= */
+
+.tarima {
+    width: 86%;
+    height: 18px;
+
+    margin: 30px auto 0;
+
+    background:
+        linear-gradient(
+            #5a5a5a,
+            #202020
+        );
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 5px 15px black;
+}
+
+
+/* =========================
+   BUTACAS
+========================= */
+
+.sala {
+    margin-top: 35px;
+
+    perspective: 700px;
+}
+
+.fila {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin: 12px auto;
+
+    transform:
+        rotateX(8deg);
+
+    width: 95%;
+}
+
+.asiento {
+    position: relative;
+
+    width: 55px;
+    height: 45px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #252525,
+            #101010
+        );
+
+    border-radius:
+        9px 9px 5px 5px;
+
+    box-shadow:
+        inset 0 -9px #080808,
+        0 5px 8px rgba(0,0,0,.6);
+
+    transition: .2s;
+}
+
+.asiento::before {
+    content: "";
+
+    position: absolute;
+
+    left: 7px;
+    right: 7px;
+
+    top: -9px;
+
+    height: 17px;
+
+    background: #292929;
+
+    border-radius: 8px 8px 3px 3px;
+}
+
+.asiento:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 0 12px rgba(255,255,255,.15);
+}
+
+
+/* =========================
+   TEXTO FINAL
+========================= */
+
+.final {
+    margin-top: 35px;
+
+    color: #555;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 700px) {
+
+    .cine {
+        padding:
+            18px 8px 40px;
+    }
+
+    .titulo h1 {
+        letter-spacing: 4px;
+    }
+
+    .cortina {
+        width: 8%;
+    }
+
+    .pantalla-marco,
+    .luces-piso {
+        width: 88%;
+    }
+
+    .controles {
+        width: 96%;
+        padding: 17px;
+    }
+
+    .entrada {
+        flex-direction: column;
+    }
+
+    input {
+        width: 100%;
+        min-width: 0;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 4px;
+    }
+
+    .fila {
+        gap: 5px;
+    }
+
+    .asiento {
+        width: 38px;
+        height: 33px;
+    }
+
+    .asiento::before {
+        left: 5px;
+        right: 5px;
+        height: 13px;
+        top: -7px;
+    }
+
+    .fila:nth-child(3) .asiento,
+    .fila:nth-child(4) .asiento {
+        width: 34px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="cine">
+
+    <!-- TÍTULO -->
+
+    <div class="titulo">
+
+        <span class="icono">🎬</span>
+
+        <h1>MI CINE</h1>
+
+        <p>BIENVENIDO A LA FUNCIÓN</p>
+
+    </div>
+
+
+    <!-- ESCENARIO -->
+
+    <div class="escenario">
+
+        <!-- LUCES SUPERIORES -->
+
+        <div class="luces">
+
+            <div class="luz"></div>
+            <div class="luz"></div>
+            <div class="luz"></div>
+            <div class="luz"></div>
+            <div class="luz"></div>
+            <div class="luz"></div>
+            <div class="luz"></div>
+
+        </div>
+
+
+        <!-- CORTINAS -->
+
+        <div class="cortina izquierda"></div>
+
+        <div class="cortina derecha"></div>
+
+
+        <!-- PANTALLA -->
+
+        <div class="pantalla-marco">
+
+            <div class="pantalla">
+
+                <iframe
+                    id="video"
+                    src=""
+                    title="Reproductor de YouTube"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+        </div>
+
+
+        <!-- LUCES DEL PISO -->
+
+        <div class="luces-piso">
+
+            <div class="luz-piso"></div>
+            <div class="luz-piso"></div>
+            <div class="luz-piso"></div>
+            <div class="luz-piso"></div>
+            <div class="luz-piso"></div>
+            <div class="luz-piso"></div>
+            <div class="luz-piso"></div>
+
+        </div>
+
+
+        <!-- TARIMA -->
+
+        <div class="tarima"></div>
+
+    </div>
+
+
+    <!-- CONTROLES -->
+
+    <div class="controles">
+
+        <h2>🎞️ SELECCIONAR PELÍCULA</h2>
+
+        <div class="entrada">
+
+            <input
+                id="url"
+                type="text"
+                placeholder="Pega aquí el enlace de YouTube..."
+            >
+
+            <button onclick="reproducir()">
+                ▶ Reproducir
+            </button>
+
+            <button onclick="pantallaCompleta()">
+                ⛶ Pantalla completa
+            </button>
+
+        </div>
+
+        <div class="ayuda">
+
+            YouTube • YouTube Shorts • enlaces youtu.be
+
+        </div>
+
+    </div>
+
+
+    <!-- BUTACAS -->
+
+    <div class="sala">
+
+        <div class="fila">
+
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+
+        </div>
+
+
+        <div class="fila">
+
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+
+        </div>
+
+
+        <div class="fila">
+
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+
+        </div>
+
+
+        <div class="fila">
+
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+            <div class="asiento"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="final">
+        🍿 DISFRUTA DE LA FUNCIÓN 🍿
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   OBTENER ID DE YOUTUBE
+========================= */
+
+function obtenerID(url) {
+
+    try {
+
+        let enlace = new URL(url);
+
+        /*
+        youtube.com/watch?v=ID
+        */
+
+        if (enlace.hostname.includes("youtube.com")) {
+
+            let id = enlace.searchParams.get("v");
+
+            if (id) {
+                return id;
+            }
+
+
+            /*
+            youtube.com/shorts/ID
+            */
+
+            if (enlace.pathname.startsWith("/shorts/")) {
+
+                return enlace.pathname
+                    .split("/shorts/")[1]
+                    .split("/")[0];
+
+            }
+
+
+            /*
+            youtube.com/embed/ID
+            */
+
+            if (enlace.pathname.startsWith("/embed/")) {
+
+                return enlace.pathname
+                    .split("/embed/")[1]
+                    .split("/")[0];
+
+            }
+
+        }
+
+
+        /*
+        youtu.be/ID
+        */
+
+        if (enlace.hostname.includes("youtu.be")) {
+
+            return enlace.pathname
+                .substring(1)
+                .split("/")[0];
+
+        }
+
+    }
+
+    catch (error) {
+
+        return null;
+
+    }
+
+    return null;
+}
+
+
+/* =========================
+   REPRODUCIR
+========================= */
+
+function reproducir() {
+
+    let url =
+        document
+        .getElementById("url")
+        .value
+        .trim();
+
+
+    let id =
+        obtenerID(url);
+
+
+    if (!id) {
+
+        alert(
+            "❌ No pude encontrar el video.\n\n" +
+            "Pega un enlace válido de YouTube."
+        );
+
+        return;
+
+    }
+
+
+    let reproductor =
+        document
+        .getElementById("video");
+
+
+    reproductor.src =
+        "https://www.youtube.com/embed/" +
+        id +
+        "?autoplay=1&rel=0";
+
+}
+
+
+/* =========================
+   PANTALLA COMPLETA
+========================= */
+
+function pantallaCompleta() {
+
+    let pantalla =
+        document
+        .querySelector(".pantalla");
+
+
+    if (pantalla.requestFullscreen) {
+
+        pantalla.requestFullscreen();
+
+    }
+
+}
+
+
+/* =========================
+   ENTER PARA REPRODUCIR
+========================= */
+
+document
+.getElementById("url")
+.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+        reproducir();
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
